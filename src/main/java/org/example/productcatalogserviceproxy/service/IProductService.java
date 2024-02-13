@@ -1,6 +1,5 @@
 package org.example.productcatalogserviceproxy.service;
 
-import org.example.productcatalogserviceproxy.dto.ProductDTO;
 import org.example.productcatalogserviceproxy.model.Product;
 
 import java.util.List;
@@ -10,9 +9,9 @@ public interface IProductService {
 
     Product getProduct(Long id);
 
-    Product createProduct(ProductDTO productDTO);
+    Product createProduct(Product product);
 
-    String updateProduct(ProductDTO productDTO);
+    Product updateProduct(Long id, Product product);
 
     String deleteProduct(Long id);
 }

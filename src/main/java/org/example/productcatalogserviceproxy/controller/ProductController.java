@@ -1,6 +1,7 @@
 package org.example.productcatalogserviceproxy.controller;
 
 import org.example.productcatalogserviceproxy.dto.ProductDTO;
+import org.example.productcatalogserviceproxy.model.Category;
 import org.example.productcatalogserviceproxy.model.Product;
 import org.example.productcatalogserviceproxy.service.IProductService;
 import org.springframework.http.HttpStatus;
@@ -45,22 +46,38 @@ public class ProductController {
             return new ResponseEntity<>(productService.getProduct(id), headers, HttpStatus.OK);
         }
         catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw e;
         }
     }
 
     @PostMapping
     private ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO){
-        return new ResponseEntity<>(productService.createProduct(productDTO), HttpStatus.CREATED);
+        Product product = getProduct(productDTO);
+        return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
     }
 
-    @PatchMapping
-    private String updateProduct(@RequestBody ProductDTO productDTO){
-        return "Updating Product -- " + productDTO;
+    @PatchMapping("{id}")
+    private Product updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO){
+        Product product = getProduct(productDTO);
+        return productService.updateProduct(id, product);
     }
 
     @DeleteMapping("{id}")
     private String deleteProduct(@PathVariable Long id){
-        return "Product deleted with id " + id;
+        return productService.deleteProduct(id);
+    }
+
+    private Product getProduct(ProductDTO productDTO){
+        Product product = new Product();
+        product.setId(productDTO.getId());
+        product.setTitle(productDTO.getTitle());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setImageUrl(productDTO.getImage());
+        Category category = new Category();
+        category.setName(productDTO.getTitle());
+        category.setDescription(productDTO.getCategory());
+        product.setCategory(category);
+        return product;
     }
 }
