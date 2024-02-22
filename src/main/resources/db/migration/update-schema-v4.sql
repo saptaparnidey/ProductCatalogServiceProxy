@@ -1,0 +1,7 @@
+ALTER TABLE test_table
+DROP
+COLUMN f1;
+
+ALTER TABLE test_table
+DROP
+COLUMN f2;

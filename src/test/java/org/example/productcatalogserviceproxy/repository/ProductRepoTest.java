@@ -64,6 +64,8 @@ public class ProductRepoTest {
         List<Product> findProductByPriceBetween = productRepo.findProductByPriceBetween(250D,2500D);
         List<Product> findAllByOrderByIdDesc = productRepo.findAllByOrderByIdDesc();
         List<Product> findAllByIsSpecialTrue = productRepo.findAllByIsSpecialTrue();
+        String name = productRepo.getProductTitleFromId(3L);
+        String categoryName = productRepo.getCategoryNameFromProductId(1L);
         System.out.println("debug");
 
 
