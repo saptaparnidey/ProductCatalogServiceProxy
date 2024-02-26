@@ -23,7 +23,7 @@ public class ProductController {
     }
 
     @GetMapping
-    private ResponseEntity<List<Product>> getProducts(){
+    public ResponseEntity<List<Product>> getProducts(){
         try{
             MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
             headers.add("App-Name", "Product-Catalog-Service");
@@ -36,7 +36,7 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    private ResponseEntity<Product> getProduct(@PathVariable Long id){
+    public ResponseEntity<Product> getProduct(@PathVariable Long id){
         try {
             if(id < 1){
                 throw new IllegalArgumentException("Product is invalid");
@@ -51,19 +51,19 @@ public class ProductController {
     }
 
     @PostMapping
-    private ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO){
         Product product = getProduct(productDTO);
         return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    private Product updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO){
+    public Product updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO){
         Product product = getProduct(productDTO);
         return productService.updateProduct(id, product);
     }
 
     @DeleteMapping("{id}")
-    private String deleteProduct(@PathVariable Long id){
+    public String deleteProduct(@PathVariable Long id){
         return productService.deleteProduct(id);
     }
 
