@@ -3,6 +3,8 @@ package org.example.productcatalogserviceproxy.controller;
 import org.example.productcatalogserviceproxy.model.Product;
 import org.example.productcatalogserviceproxy.service.IProductService;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +22,9 @@ class ProductControllerTest {
 
     @MockBean
     private IProductService productService;
+
+    @Captor
+    private ArgumentCaptor<Long> idCaptor;
 
     @Test
     public void test_GetProduct_ReturnProduct() {
@@ -51,6 +56,19 @@ class ProductControllerTest {
     @Test
     public void test_GetProductWithInvalidId_ThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> productController.getProduct(0L));
+    }
+
+    @Test
+    public void test_ProductControllerCallsProductServiceWithSameId(){
+        //Arrange
+        Long id = 2L;
+
+        //Act
+        productController.getProduct(id);
+
+        //Assert
+        verify(productService).getProduct(idCaptor.capture());
+        assertEquals(id, idCaptor.getValue());
     }
 
 }
