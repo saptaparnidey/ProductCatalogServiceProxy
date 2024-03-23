@@ -1,5 +1,6 @@
 package org.example.productcatalogserviceproxy.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.FetchType;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class Category extends BaseModel{
     private String name;
     private String description;
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SUBSELECT)
+    @JsonBackReference
+//    @Fetch(FetchMode.SUBSELECT)
     private List<Product> products;
 }
