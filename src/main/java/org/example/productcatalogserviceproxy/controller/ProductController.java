@@ -22,6 +22,11 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping("/{userId}/{productId}")
+    public Product getProductDetails(@PathVariable Long userId, @PathVariable Long productId){
+        return productService.getProductDetails(userId, productId);
+    }
+
     @GetMapping
     public ResponseEntity<List<Product>> getProducts(){
         try{

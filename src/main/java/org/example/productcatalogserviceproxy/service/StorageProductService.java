@@ -1,9 +1,12 @@
 package org.example.productcatalogserviceproxy.service;
 
+import org.example.productcatalogserviceproxy.dto.UserDTO;
 import org.example.productcatalogserviceproxy.model.Category;
 import org.example.productcatalogserviceproxy.model.Product;
 import org.example.productcatalogserviceproxy.repository.ProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +16,20 @@ public class StorageProductService implements IProductService{
 
     private ProductRepo productRepo;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     public StorageProductService(ProductRepo productRepo){
         this.productRepo = productRepo;
+    }
+
+    @Override
+    public Product getProductDetails(Long userId, Long productId){
+        Product product = productRepo.findProductById(productId);
+
+        UserDTO userDTO = restTemplate.getForEntity("http://userservice/users/{id}", UserDTO.class, userId).getBody();
+        System.out.println(userDTO.getEmail());
+        return product;
     }
 
     @Override

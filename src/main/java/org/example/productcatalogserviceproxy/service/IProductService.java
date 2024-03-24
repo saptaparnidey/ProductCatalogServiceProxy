@@ -5,6 +5,8 @@ import org.example.productcatalogserviceproxy.model.Product;
 import java.util.List;
 
 public interface IProductService {
+
+    Product getProductDetails(Long userId, Long productId);
     List<Product> getProducts();
 
     Product getProduct(Long id);

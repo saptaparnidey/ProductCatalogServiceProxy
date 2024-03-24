@@ -19,6 +19,11 @@ public class FakeStoreProductService implements IProductService {
     }
 
     @Override
+    public Product getProductDetails(Long userId, Long productId){
+        return null;
+    }
+
+    @Override
     public List<Product> getProducts(){
         FakeStoreProductDto[] fakeStoreProductDtos = fakeStoreAPIClient.getFakeStoreProducts();
         List<Product> products = new ArrayList<>();

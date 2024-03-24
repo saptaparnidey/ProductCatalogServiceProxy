@@ -18,6 +18,11 @@ public class ProductServiceStub implements IProductService {
     }
 
     @Override
+    public Product getProductDetails(Long userId, Long productId){
+        return null;
+    }
+
+    @Override
     public List<Product> getProducts() {
         return null;
     }
